@@ -3,9 +3,13 @@ import pandas as pd
 import plotly.express as px
 from datetime import date
 from tracker_logic import Project, Task
+from database_setup import create_tables  # <-- ADDED IMPORT
 
 # ================= CONFIGURATION =================
 st.set_page_config(page_title="TaskTracker Pro", page_icon="☑️", layout="wide")
+
+# ================= INITIALIZE DATABASE =================
+create_tables()  # <-- ADDED INITIALIZATION: Ensures DB exists before app runs
 
 # ================= PROFESSIONAL CSS =================
 st.markdown("""
@@ -119,10 +123,10 @@ m4.metric("High Priority", len(df[df['Priority']=='High']))
 
 st.markdown("<br>", unsafe_allow_html=True)
 
-# 3. Main Tabs (REORDERED: Add -> List -> Analytics)
+# 3. Main Tabs
 tab_add, tab_list, tab_analytics = st.tabs(["➕ Add Task", "📋 Task List", "📊 Analytics"])
 
-# --- TAB 1: ADD TASK (Now First!) ---
+# --- TAB 1: ADD TASK ---
 with tab_add:
     st.markdown("##### New Task Details")
     with st.form("add_task_form", clear_on_submit=True):
